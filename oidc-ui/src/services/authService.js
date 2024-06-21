@@ -36,7 +36,7 @@ class authService {
       requestTime: new Date().toISOString(),
       request: {
         transactionId: transactionId,
-        individualId: individualId,
+        individualId: individualId.concat("@nrcid"),
         challengeList: challengeList,
       },
     };
@@ -169,7 +169,7 @@ class authService {
       requestTime: new Date().toISOString(),
       request: {
         transactionId: transactionId,
-        individualId: individualId,
+        individualId: individualId.concat("@nrcid"),
         otpChannels: otpChannels,
         captchaToken: captchaToken,
       },
