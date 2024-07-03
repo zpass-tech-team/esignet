@@ -82,7 +82,22 @@ export default function OtpGet({
   };
 
   const handleChange = (e) => {
-    setLoginState({ ...loginState, [e.target.id]: e.target.value });
+    let { id, value } = e.target;
+    if (id === 'Otp_mosip-vid') {
+        if (value.length > 10) {
+          return; 
+      }
+        // Remove all slashes to reset the string before formatting
+        value = value.replace(/[/]/g,"");
+        // Add slashes based on the length of the value
+        if (value.length > 6) {
+            value = value.slice(0, 6) + '/' + value.slice(6);
+        }
+        if (value.length > 9) {
+            value = value.slice(0, 9) + '/' + value.slice(9);
+        }
+    }
+        setLoginState({ ...loginState, [id]: value });
   };
 
   const sendOTP = async () => {
