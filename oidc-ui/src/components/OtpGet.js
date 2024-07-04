@@ -83,21 +83,29 @@ export default function OtpGet({
 
   const handleChange = (e) => {
     let { id, value } = e.target;
+    let cursorPosition = e.target.selectionStart;
+
     if (id === 'Otp_mosip-vid') {
-        if (value.length > 10) {
-          return; 
-      }
+        // Restrict editing except at the end
+        if (cursorPosition < value.length) {
+        return;
+        }  
+       // Prevent exceeding the format
+        if ( value.length > 10) {
+            return; // Do not update the state if the value exceeds the format
+        }
         // Remove all slashes to reset the string before formatting
-        value = value.replace(/[/]/g,"");
+        value = value.trim().replace(/[/]/g,"");
         // Add slashes based on the length of the value
         if (value.length > 6) {
-            value = value.slice(0, 6) + '/' + value.slice(6);
+            value = value.slice(0, 6) + '/' + value.slice(6); 
         }
         if (value.length > 9) {
             value = value.slice(0, 9) + '/' + value.slice(9);
         }
+        // Update the state with the formatted value
+        setLoginState({ ...loginState, [id]: value }); 
     }
-        setLoginState({ ...loginState, [id]: value });
   };
 
   const sendOTP = async () => {
