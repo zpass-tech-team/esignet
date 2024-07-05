@@ -94,11 +94,11 @@ export default function OtpGet({
         // Add slashes based on the length of the value
         if (value.length > 6) {
             value = value.slice(0, 6) + '/' + value.slice(6);
-            cursorPosition++;
+            if(cursorPosition > 6) cursorPosition++;
         }
         if (value.length > 9) {
             value = value.slice(0, 9) + '/' + value.slice(9);
-            cursorPosition++;
+            if(cursorPosition > 9) cursorPosition++;
         }
         // Update the state with the formatted value
         setLoginState({ ...loginState, [id]: value }); 
