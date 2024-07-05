@@ -94,8 +94,8 @@ export default function OtpGet({
         if ( value.length > 10) {
             return; // Do not update the state if the value exceeds the format
         }
-        // Remove all slashes to reset the string before formatting
-        value = value.trim().replace(/[/]/g,"");
+        // Remove all slashes and special characters to reset the string before formatting
+        value = value.trim().replace(/[^\d]/g,"");
         // Add slashes based on the length of the value
         if (value.length > 6) {
             value = value.slice(0, 6) + '/' + value.slice(6); 
