@@ -58,7 +58,30 @@ export default function L1Biometrics({
   const authTxnIdLength = parseInt(authTxnIdLengthValue);
 
   const handleInputChange = (e) => {
-    setLoginState({ ...loginState, [e.target.id]: e.target.value });
+    let { id, value } = e.target;
+    let cursorPosition = e.target.selectionStart;
+    if (id === 'sbi_mosip-vid') {
+       // Prevent exceeding the format
+        if ( value.length > 10) {
+            return; // Do not update the state if the value exceeds the format
+        }
+        // Remove all slashes to reset the string before formatting
+        value = value.replace(/[^\d]/g,"");
+        // Add slashes based on the length of the value
+        if (value.length > 6) {
+            value = value.slice(0, 6) + '/' + value.slice(6);
+            if(cursorPosition > 6) cursorPosition++;
+        }
+        if (value.length > 9) {
+            value = value.slice(0, 9) + '/' + value.slice(9);
+            if(cursorPosition > 9) cursorPosition++;
+        }
+        // Update the state with the formatted value
+        setLoginState({ ...loginState, [id]: value }); 
+        setTimeout(() => {
+          e.target.setSelectionRange(cursorPosition, cursorPosition);
+        }, 0);
+  }
   };
 
   /* authenticate method after removing startCapture
