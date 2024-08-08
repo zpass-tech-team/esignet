@@ -81,14 +81,10 @@ export default function OtpGet({
     setCaptchaToken(value);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e) => {          
     let { id, value } = e.target;
     let cursorPosition = e.target.selectionStart;
     if (id === 'Otp_mosip-vid') {
-       // Prevent exceeding the format
-        if ( value.length > 10) {
-            return; // Do not update the state if the value exceeds the format
-        }
         // Remove all slashes to reset the string before formatting
         value = value.replace(/[^\d]/g,"");
         // Add slashes based on the length of the value
